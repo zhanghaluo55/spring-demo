@@ -6,14 +6,9 @@ import com.hongpro.demo.spring.bean.User;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.core.io.Resource;
-
-import java.util.Locale;
-import java.util.function.Supplier;
 
 /**
- * @Description:
+ * @Description: bean初始化相关操作
  * @Author: zhangzihong
  * @CreateTime: 2021/7/10
  * @Version:
@@ -29,7 +24,7 @@ public class Main {
         //Bean definition定义bean
         AbstractBeanDefinition beanDefinition = BeanDefinitionBuilder.genericBeanDefinition().getBeanDefinition();
         //beanDefinition.setBeanClass(User.class);
-        //applicationContext.registerBeanDefinition("user", beanDefinition);
+        applicationContext.registerBeanDefinition("user", beanDefinition);
 
         //通过FactoryBean方式定义
 //        applicationContext.registerBean(User.class, new Supplier<User>() {
@@ -42,7 +37,7 @@ public class Main {
 //        });
         beanDefinition.setBeanClass(ShuaiFactoryBean.class);
         applicationContext.registerBeanDefinition("user", beanDefinition);
-        applicationContext.refresh();
+       // applicationContext.refresh();
         System.out.println(applicationContext.getEnvironment().getSystemEnvironment());
         System.out.println(applicationContext.getEnvironment().getSystemProperties());
 
@@ -50,10 +45,10 @@ public class Main {
         //applicationContext.publishEvent();
 
         //资源配置获取
-        Resource resource = applicationContext.getResource("Xxx");
-        System.out.println(resource);
+       // Resource resource = applicationContext.getResource("Xxx");
+       // System.out.println(resource);
         //国际化
-        applicationContext.getMessage("test", null, Locale.CHINA);
+      //  applicationContext.getMessage("test", null, Locale.CHINA);
 
         User user = applicationContext.getBean("user", User.class);
     }

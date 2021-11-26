@@ -1,8 +1,8 @@
-package com.hongpro.demo.spring.bean;
+package com.hongpro.demo.spring.processor;
 
+import com.hongpro.demo.spring.bean.Shuai;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 
@@ -12,7 +12,7 @@ import java.lang.reflect.Field;
  * @CreateTime: 2021/7/24
  * @Version:
  */
-@Component
+//@Component
 public class ShuaiBeanPostProcessor implements BeanPostProcessor {
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
@@ -27,8 +27,15 @@ public class ShuaiBeanPostProcessor implements BeanPostProcessor {
                 Shuai annotation = field.getAnnotation(Shuai.class);
                 String value = annotation.value();
                 System.out.println(value);
+
+                field.setAccessible(true);
+                try {
+                    field.set(bean, value);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
             }
         }
-        return new User();
+        return bean;
     }
 }
